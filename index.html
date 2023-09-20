@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+
+ 
+  
+  
+  <title>Location of Biggest Companies in Miami according to FinanceCharts.com Sept. 2023</title>
+
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css" rel="stylesheet" />
+ 
+
+
+  <style>
+    body { margin: 0; padding: 0; }
+  
+    #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+  
+    .map-overlay{
+    position: absolute;
+    left: 0;
+    padding: 10px;
+    border: 10px;
+    }
+    </style>
+  
+
+</head>
+<body>
+<div id="map"></div>
+<div class="map-overlay top">
+    <button style="font-size: 2em;" onclick="move()">Click to see the Biggest Companies of Miami as of Sept. 2023---then click Location---</button>
+</div>
+
+<script>
+//top five companies in Miami
+const companies = [
+[-80.288077, 25.783150],
+[-80.178429, 25.775134],
+[-80.335740, 25.807292],
+[-80.320272, 25.791712],
+[-80.385434, 25.867987],
+];
+
+const names = ['Lennar', 'Royal Carribean', 'Carnival', 'Norwegian', 'Ryder'];
+//top five companies in Miami
+
+
+mapboxgl.accessToken='pk.eyJ1IjoiY2hhcmthciIsImEiOiJjbG05cWRxcnUwa2d5M2Zud3lzeHY5M2NwIn0.mL4o60vkSVrCNjlRaWBGPA'
+//to run, use own access token
+var map = new mapboxgl.Map({
+
+container: 'map',
+style: 'mapbox://styles/mapbox/streets-v11',
+center: [-80.195941, 25.775342],//starting long and lat of Miami
+zoom: 10
+
+});
+
+let mark = new mapboxgl.Marker().setLngLat([-80.195941, 25.775342])//sets marker
+.addTo(map);
+
+let counter = 0;//initialization for setTimeout
+   
+function move () {
+ //used to move through companies[]
+
+    setTimeout(() => {
+
+        if(companies.length <= counter) return counter=0;
+
+        mark = mark.setLngLat(companies[counter]).setPopup(new mapboxgl.Popup().setHTML("<h1>"+(counter+1)+": "+names[counter]+"</h1>")) //labels each marker in order when clicked
+
+        counter++;
+
+        move();//continues function until if statement fulfilled
+
+    }, 2500)//changes peg every 2.5 seconds
+}
+ 
+</script>
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
